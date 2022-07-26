@@ -1,0 +1,16 @@
+
+.collapseApp {
+  cursor: pointer;
+  & .body{
+    display: block;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 1s cubic-bezier(0, 1, 0, 1);;
+  }
+  &.show {
+    & .body{
+      max-height: 100em;
+      transition: max-height 1s ease-in-out;
+    }
+  }
+}
