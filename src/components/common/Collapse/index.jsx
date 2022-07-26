@@ -1,5 +1,5 @@
 import "./index.scss"
-import React, { useRef} from "react"
+import React, {useEffect, useRef} from "react"
 
 
 const Header = () => null
@@ -9,13 +9,19 @@ const findNamedSlot = (children, name) => React.Children.toArray(children).find(
 		child => child.type === name
 );
 
-const Collapse = ({children, ...props}) => {
+const Collapse = ({children, open = false, ...props}) => {
 	const ref = useRef()
 
 	const header = findNamedSlot(children, Header)
 	const body = findNamedSlot(children, Body)
 
+	useEffect(() => {
+		open ? ref.current.classList.add('show') : ref.current.classList.remove('show')
+	}, [open])
+
 	const click = () => {
+		if(open)
+			return
 		ref.current.classList.toggle('show');
 	}
 	return (

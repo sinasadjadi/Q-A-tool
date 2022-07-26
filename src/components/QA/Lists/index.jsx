@@ -1,14 +1,89 @@
 import "./index.scss"
 import Button from "react-bootstrap/cjs/Button";
+import Modal from 'react-bootstrap/Modal';
+
 import Alert from "react-bootstrap/cjs/Alert";
 import {useSelector, useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
 import Collapse from "components/common/Collapse";
-import {removeAll, sort, remove} from "store/slices/QA"
+import {removeAll, sort, remove, edit} from "store/slices/QA"
+import Form from "react-bootstrap/Form";
+
+
+const EditModal = ({data, ...props}) => {
+	const [question, setQuestion] = useState("")
+	const [answer, setAnswer] = useState("")
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		setQuestion(data.question)
+		setAnswer(data.answer)
+	}, [data.id])
+
+	const save = () => {
+		if (!answer || !question)
+			return
+
+		const {id} = data
+		dispatch(edit({id, answer, question}))
+
+		setAnswer("")
+		setQuestion("")
+
+		props.onDismiss()
+	}
+
+	return (
+			<Modal
+					{...props}
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
+					centered
+			>
+				<Modal.Header>
+					<Modal.Title id="contained-modal-title-vcenter">
+						Change Question
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className="question text-left mb-3">
+							<Form.Label>Question</Form.Label>
+							<Form.Control
+									data-testid={"question_input"}
+									type="text"
+									placeholder="type your question"
+									value={question}
+									name={"question"}
+									onChange={(event => setQuestion(event.target.value))}/>
+						</Form.Group>
+						<Form.Group className="question text-left mb-3">
+							<Form.Label>Answer</Form.Label>
+							<Form.Control
+									data-testid={"answer_input"}
+									as="textarea"
+									value={answer}
+									name={"answer"}
+									rows={3}
+									placeholder="type the answer"
+									onChange={(event => setAnswer(event.target.value))}/>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="success" className={"mr-3"} onClick={save}>Save</Button>
+					<Button variant="secondary" onClick={props.onDismiss}>Close</Button>
+
+				</Modal.Footer>
+			</Modal>
+	);
+}
 
 const Index = () => {
 	const items = useSelector(state => state.QA)
 	const [sortedItems, setSortedItems] = useState([])
+	const [editShow, setEditShow] = useState(false);
+	const [editData, setEditData] = useState({})
 	const dispatch = useDispatch()
 
 	useEffect(() => setSortedItems(items), [items])
@@ -18,10 +93,19 @@ const Index = () => {
 		e.stopPropagation()
 		dispatch(remove({id}))
 	}
-
+	const showEdit = (e, item) => {
+		e.stopPropagation()
+		setEditShow(true)
+		setEditData({...item})
+	}
 	return (
 			<div className={"section lists"}>
 
+				<EditModal
+						show={editShow}
+						data={editData}
+						onDismiss={() => setEditShow(false)}
+				/>
 				<h2 className={"title mb-3"} data-testid={"lists_title"}>
 					<b>Created Questions</b>
 				</h2>
@@ -37,9 +121,15 @@ const Index = () => {
 												<div className={"question"}>
 													<b>{item.question}</b>
 												</div>
-												<Button
-														onClick={(e) => removeItem(e, item.id)}
-														variant="danger">Remove</Button>
+												<div>
+													<Button
+															className={"mr-3"}
+															onClick={(e) => showEdit(e, item)}>Edit</Button>
+													<Button
+															onClick={(e) => removeItem(e, item.id)}
+															variant="danger">Remove</Button>
+
+												</div>
 											</div>
 										</Collapse.Header>
 

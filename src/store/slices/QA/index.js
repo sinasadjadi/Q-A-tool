@@ -14,6 +14,11 @@ const Index = createSlice({
 		add(state, action) {
 			state.push({...action.payload, id: guidGenerator()})
 		},
+		edit(state, action) {
+			const {id, answer, question} = action.payload
+			const index = state.findIndex(item => item.id === id)
+			state[index] = {...state[index] , answer, question}
+		},
 		remove(state, action) {
 			const {id} = action.payload
 			state.splice(state.findIndex(item => item.id === id), 1)
@@ -29,7 +34,7 @@ const Index = createSlice({
 
 export default Index.reducer;
 
-export const {add, remove, removeAll, sort} = Index.actions;
+export const {add, remove, removeAll, sort, edit} = Index.actions;
 
 export const createNewQuestion = payload => async dispatch => {
 	try {

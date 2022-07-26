@@ -19,5 +19,9 @@ supporting sass and scss
 2. `yarn install`
 3. To Run Test Suite:  `yarn test`  
 4. To Start Server:  `yarn start`  
-5. To Visit App:  `localhost:3000` 
->>>>>>> initial commit
+5. To Visit App:  `localhost:3000`  
+
+
+backlog: 
+ add custom popup
+ 
