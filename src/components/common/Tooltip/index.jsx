@@ -1,51 +1,42 @@
 import React, {useEffect, useRef} from "react";
 import "./index.scss"
 
-const findNamedSlot = (children, name) => React.Children.toArray(children).find(
-		child => child.type === name
-);
 
-const Text = () => null
-
-const Tooltip = ({children}) => {
+const Tooltip = ({children, text}) => {
 
 	const ref = useRef()
-	const Text = findNamedSlot(children, Text)
 
 	useEffect(() => {
+		if(!text)
+			return
 		const el = ref.current
-		const tip = document.createElement('div');
-		tip.classList.add('customTooltip');
-		tip.innerText = el.getAttribute('tip');
-		let delay = el.getAttribute('tip-delay');
-		if (delay) {
-			tip.style.transitionDelay = delay + 's';
-		}
+
+		const tip = el.querySelector(".customTooltip")
+
 		tip.style.transform =
 				'translate(' +
 				(el.hasAttribute('tip-left') ? 'calc(-100% - 5px)' : '15px') + ', ' +
 				(el.hasAttribute('tip-top') ? '-100%' : '0') +
 				')';
+
 		el.appendChild(tip);
 		el.onmousemove = e => {
 			tip.style.left = e.clientX + 'px'
 			tip.style.top = e.clientY + 'px';
 		};
 
-	}, [])
+	}, [text])
+
+	if(!text)
+		return children
+
 	return (
-			<div ref={ref}>
-				{Text && (
-						<div className={"header"}>
-							{Text.props.children}
-						</div>
-				)}
+			<div ref={ref} className={"tooltipWrapper"}>
 				{children}
+				<div className={"customTooltip"}>{text}</div>
 			</div>
 	)
 }
-
-Tooltip.Text = Text
 
 
 export default Tooltip

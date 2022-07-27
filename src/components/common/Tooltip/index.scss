@@ -1,32 +1,23 @@
-[tip] .customTooltip {
+//.tooltipWrapper{
+//  position: relative;
+//}
+.tooltipWrapper .customTooltip {
   position: fixed;
-  font-size: 16px;
-  line-height: 20px;
-  padding: 5px;
+  font-size: 1rem;
+  max-width: 200px;
+  line-height: 1.5rem;
+  padding: 8px;
+  text-align: left;
   background: white;
   border: 1px solid #ccc;
   visibility: hidden;
   box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
   opacity: 0;
-  transition:
-          opacity 0.3s,
-          visiblity 0s;
-}
-[tip]:hover .customTooltip {
-  visibility: visible;
-  opacity: 1;
+  transition: opacity 0.3s,
+  visiblity 0s;
 }
 
-button {
-  display: block;
-  cursor: pointer;
-  padding: 8px 15px;
-  border: 1px solid gray;
-  border-radius: 4px;
-  margin: 50px;
-  font-size: 18px;
-  background: white;
-}
-button:hover {
-  border-color: dodgerblue;
+.tooltipWrapper:hover .customTooltip {
+  visibility: visible;
+  opacity: 1;
 }
