@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import Collapse from "components/common/Collapse";
 import {removeAll, sort, remove, edit} from "store/slices/QA"
 import Form from "react-bootstrap/Form";
-
+import Tooltip from "components/common/Tooltip";
 
 const EditModal = ({data, ...props}) => {
 	const [question, setQuestion] = useState("")
@@ -106,9 +106,13 @@ const Index = () => {
 						data={editData}
 						onDismiss={() => setEditShow(false)}
 				/>
-				<h2 className={"title mb-3"} data-testid={"lists_title"}>
-					<b>Created Questions</b>
-				</h2>
+				<div className={"d-flex justify-content-center mb-3"}>
+					<Tooltip text={"Here you can find the created questions and their answers"}>
+						<h2 className={"title mb-3"} data-testid={"lists_title"}>
+							Created Questions
+						</h2>
+					</Tooltip>
+				</div>
 				<div>
 					{(!!sortedItems.length &&
 							sortedItems.map(item => (

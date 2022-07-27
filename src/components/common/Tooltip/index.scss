@@ -1,0 +1,23 @@
+//.tooltipWrapper{
+//  position: relative;
+//}
+.tooltipWrapper .customTooltip {
+  position: fixed;
+  font-size: 1rem;
+  max-width: 200px;
+  line-height: 1.5rem;
+  padding: 8px;
+  text-align: left;
+  background: white;
+  border: 1px solid #ccc;
+  visibility: hidden;
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s,
+  visiblity 0s;
+}
+
+.tooltipWrapper:hover .customTooltip {
+  visibility: visible;
+  opacity: 1;
+}

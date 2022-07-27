@@ -5,7 +5,7 @@ import Button from "react-bootstrap/cjs/Button";
 import {useState} from "react";
 import {createNewQuestion} from "store/slices/QA";
 import {useDispatch} from "react-redux";
-
+import Tooltip from "components/common/Tooltip";
 
 const Index = () => {
 	const dispatch = useDispatch();
@@ -41,7 +41,13 @@ const Index = () => {
 	return (
 
 			<div className={"section create"}>
-				<h2 className={"title"} data-testid={"create_question_title"}><b>Create a new question</b></h2>
+				<div className={"d-flex justify-content-center mb-3"}>
+					<Tooltip text={"Here you can create new questions and their answers"}>
+						<h2 className={"title mb-3"} data-testid={"lists_title"}>
+							Create a new question
+						</h2>
+					</Tooltip>
+				</div>
 				<Form>
 					<Form.Group className="question text-left mb-3">
 						<Form.Label>Question</Form.Label>
