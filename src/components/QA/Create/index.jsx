@@ -43,7 +43,7 @@ const Index = () => {
 			<div className={"section create"}>
 				<div className={"d-flex justify-content-center mb-3"}>
 					<Tooltip text={"Here you can create new questions and their answers"}>
-						<h2 className={"title mb-3"} data-testid={"lists_title"}>
+						<h2 className={"title mb-3"} data-testid={"create_question_title"}>
 							Create a new question
 						</h2>
 					</Tooltip>
