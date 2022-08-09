@@ -22,9 +22,10 @@ const Index = () => {
 		if (loading) {
 			return false
 		}
-		setLoading(true)
 		if (!question || !answer)
 			return
+		setLoading(true)
+
 		try {
 			const form = {question, answer}
 			await dispatch(createNewQuestion({form, delay}))
